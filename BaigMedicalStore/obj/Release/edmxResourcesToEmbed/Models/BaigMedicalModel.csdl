@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="BMSEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="Distributor_Get" ReturnType="Collection(BMSModel.Distributor_Get_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="Phone" Mode="In" Type="String" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="TotalRecords" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Invoice_Get" ReturnType="Collection(BMSModel.Invoice_Get_Result)">
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+      <Parameter Name="InvoiceNo" Mode="In" Type="Int32" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="TotalRecords" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Item_Get" ReturnType="Collection(BMSModel.Item_Get_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Distributor" Mode="In" Type="String" />
+      <Parameter Name="Manufacturer" Mode="In" Type="String" />
+      <Parameter Name="Location" Mode="In" Type="String" />
+      <Parameter Name="Category" Mode="In" Type="Int32" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="TotalRecords" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Manufacturer_Get" ReturnType="Collection(BMSModel.Manufacturer_Get_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Alias" Mode="In" Type="String" />
+      <Parameter Name="Phone" Mode="In" Type="String" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="TotalRecords" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="C__MigrationHistory" EntityType="BMSModel.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="BMSModel.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="BMSModel.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="BMSModel.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="BMSModel.AspNetUser" />
+    <EntitySet Name="Categories" EntityType="BMSModel.Category" />
+    <EntitySet Name="Distributors" EntityType="BMSModel.Distributor" />
+    <EntitySet Name="DistributorManufacturers" EntityType="BMSModel.DistributorManufacturer" />
+    <EntitySet Name="Invoices" EntityType="BMSModel.Invoice" />
+    <EntitySet Name="InvoiceDetails" EntityType="BMSModel.InvoiceDetail" />
+    <EntitySet Name="Locations" EntityType="BMSModel.Location" />
+    <EntitySet Name="Manufacturers" EntityType="BMSModel.Manufacturer" />
+    <EntitySet Name="Users" EntityType="BMSModel.User" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="BMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="BMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_AspNetUsers" Association="BMSModel.FK_User_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DistributorManufacturers_Distributor" Association="BMSModel.FK_DistributorManufacturers_Distributor">
+      <End Role="Distributor" EntitySet="Distributors" />
+      <End Role="DistributorManufacturer" EntitySet="DistributorManufacturers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DistributorManufacturers_Manufacturer" Association="BMSModel.FK_DistributorManufacturers_Manufacturer">
+      <End Role="Manufacturer" EntitySet="Manufacturers" />
+      <End Role="DistributorManufacturer" EntitySet="DistributorManufacturers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceDetail_Invoice" Association="BMSModel.FK_InvoiceDetail_Invoice">
+      <End Role="Invoice" EntitySet="Invoices" />
+      <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="BMSModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="Items" EntityType="BMSModel.Item" />
+    <AssociationSet Name="FK_Item_Distributor" Association="BMSModel.FK_Item_Distributor">
+      <End Role="Distributor" EntitySet="Distributors" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceDetail_Item" Association="BMSModel.FK_InvoiceDetail_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Item_Manufacturer" Association="BMSModel.FK_Item_Manufacturer">
+      <End Role="Manufacturer" EntitySet="Manufacturers" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="Distributor_Get_Result">
+    <Property Type="Int64" Name="RowNumber" Nullable="true" />
+    <Property Type="Int32" Name="DistributorId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Company" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Phone" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Address" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+    <Property Type="Int32" Name="UpdatedBy" Nullable="true" />
+    <Property Type="DateTime" Name="UpdatedOn" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="Invoice_Get_Result">
+    <Property Type="Int64" Name="RowNumber" Nullable="true" />
+    <Property Type="Int32" Name="InvoiceId" Nullable="false" />
+    <Property Type="DateTime" Name="AddedOn" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="CreatedBy" Nullable="false" />
+    <Property Type="Int32" Name="NoOfItems" Nullable="false" />
+    <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AmountRecieved" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="DiscountAmount" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Item_Get_Result">
+    <Property Type="Int64" Name="RowNumber" Nullable="true" />
+    <Property Type="Int32" Name="ItemId" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="Int32" Name="LocationId" Nullable="true" />
+    <Property Type="Int32" Name="CategoryId" Nullable="false" />
+    <Property Type="Decimal" Name="PurchasePrice" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="SalePrice" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="UnitPrice" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="PiecesInPacking" Nullable="true" />
+    <Property Type="String" Name="Formula" Nullable="true" />
+    <Property Type="Int32" Name="DistributorId" Nullable="true" />
+    <Property Type="Int32" Name="ManufacturerId" Nullable="true" />
+    <Property Type="Int32" Name="TotalStock" Nullable="true" />
+    <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+    <Property Type="Int32" Name="UpdatedBy" Nullable="true" />
+    <Property Type="DateTime" Name="UpdatedOn" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Manufacturer" Nullable="false" />
+    <Property Type="String" Name="Distributor" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Location" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Category" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Manufacturer_Get_Result">
+    <Property Type="Int64" Name="RowNumber" Nullable="true" />
+    <Property Type="Int32" Name="ManufacturerId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Alias" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Address" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+    <Property Type="Int32" Name="UpdatedBy" Nullable="true" />
+    <Property Type="DateTime" Name="UpdatedOn" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+  </ComplexType>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="BMSModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="BMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="BMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="BMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="BMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="Users" Relationship="BMSModel.FK_User_AspNetUsers" FromRole="AspNetUser" ToRole="User" />
+    <NavigationProperty Name="AspNetRoles" Relationship="BMSModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Distributor">
+    <Key>
+      <PropertyRef Name="DistributorId" />
+    </Key>
+    <Property Name="DistributorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Company" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DistributorManufacturers" Relationship="BMSModel.FK_DistributorManufacturers_Distributor" FromRole="Distributor" ToRole="DistributorManufacturer" />
+    <NavigationProperty Name="Items" Relationship="BMSModel.FK_Item_Distributor" FromRole="Distributor" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="DistributorManufacturer">
+    <Key>
+      <PropertyRef Name="DistributorManufacturerId" />
+    </Key>
+    <Property Name="DistributorManufacturerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DistributorId" Type="Int32" Nullable="false" />
+    <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Distributor" Relationship="BMSModel.FK_DistributorManufacturers_Distributor" FromRole="DistributorManufacturer" ToRole="Distributor" />
+    <NavigationProperty Name="Manufacturer" Relationship="BMSModel.FK_DistributorManufacturers_Manufacturer" FromRole="DistributorManufacturer" ToRole="Manufacturer" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AddedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="NoOfItems" Type="Int32" Nullable="false" />
+    <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="AmountRecieved" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="BMSModel.FK_InvoiceDetail_Invoice" FromRole="Invoice" ToRole="InvoiceDetail" />
+  </EntityType>
+  <EntityType Name="InvoiceDetail">
+    <Key>
+      <PropertyRef Name="InvoiceDetailId" />
+    </Key>
+    <Property Name="InvoiceDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <NavigationProperty Name="Invoice" Relationship="BMSModel.FK_InvoiceDetail_Invoice" FromRole="InvoiceDetail" ToRole="Invoice" />
+    <NavigationProperty Name="Item" Relationship="BMSModel.FK_InvoiceDetail_Item" FromRole="InvoiceDetail" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Manufacturer">
+    <Key>
+      <PropertyRef Name="ManufacturerId" />
+    </Key>
+    <Property Name="ManufacturerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DistributorManufacturers" Relationship="BMSModel.FK_DistributorManufacturers_Manufacturer" FromRole="Manufacturer" ToRole="DistributorManufacturer" />
+    <NavigationProperty Name="Items" Relationship="BMSModel.FK_Item_Manufacturer" FromRole="Manufacturer" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AspNetUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AddedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="AspNetUser" Relationship="BMSModel.FK_User_AspNetUsers" FromRole="User" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="BMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="BMSModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="BMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="BMSModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_AspNetUsers">
+    <End Type="BMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="BMSModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="AspNetUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DistributorManufacturers_Distributor">
+    <End Type="BMSModel.Distributor" Role="Distributor" Multiplicity="1" />
+    <End Type="BMSModel.DistributorManufacturer" Role="DistributorManufacturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Distributor">
+        <PropertyRef Name="DistributorId" />
+      </Principal>
+      <Dependent Role="DistributorManufacturer">
+        <PropertyRef Name="DistributorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DistributorManufacturers_Manufacturer">
+    <End Type="BMSModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
+    <End Type="BMSModel.DistributorManufacturer" Role="DistributorManufacturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacturer">
+        <PropertyRef Name="ManufacturerId" />
+      </Principal>
+      <Dependent Role="DistributorManufacturer">
+        <PropertyRef Name="ManufacturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceDetail_Invoice">
+    <End Type="BMSModel.Invoice" Role="Invoice" Multiplicity="1" />
+    <End Type="BMSModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="InvoiceId" />
+      </Principal>
+      <Dependent Role="InvoiceDetail">
+        <PropertyRef Name="InvoiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="BMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="BMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LocationId" Type="Int32" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PiecesInPacking" Type="Int32" />
+    <Property Name="Formula" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DistributorId" Type="Int32" />
+    <Property Name="ManufacturerId" Type="Int32" />
+    <Property Name="TotalStock" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Distributor" Relationship="BMSModel.FK_Item_Distributor" FromRole="Item" ToRole="Distributor" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="BMSModel.FK_InvoiceDetail_Item" FromRole="Item" ToRole="InvoiceDetail" />
+    <NavigationProperty Name="Manufacturer" Relationship="BMSModel.FK_Item_Manufacturer" FromRole="Item" ToRole="Manufacturer" />
+  </EntityType>
+  <Association Name="FK_Item_Distributor">
+    <End Type="BMSModel.Distributor" Role="Distributor" Multiplicity="0..1" />
+    <End Type="BMSModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Distributor">
+        <PropertyRef Name="DistributorId" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="DistributorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceDetail_Item">
+    <End Type="BMSModel.Item" Role="Item" Multiplicity="1" />
+    <End Type="BMSModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ItemId" />
+      </Principal>
+      <Dependent Role="InvoiceDetail">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Item_Manufacturer">
+    <End Type="BMSModel.Manufacturer" Role="Manufacturer" Multiplicity="0..1" />
+    <End Type="BMSModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacturer">
+        <PropertyRef Name="ManufacturerId" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="ManufacturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

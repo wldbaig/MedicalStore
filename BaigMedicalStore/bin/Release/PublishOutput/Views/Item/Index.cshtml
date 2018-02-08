@@ -1,0 +1,142 @@
+﻿
+@using Kendo.Mvc.UI
+@using BaigMedicalStore.Common
+
+@model IEnumerable<BaigMedicalStore.Models.ItemViewModel>
+
+@{
+    ViewBag.Title = "Items";
+
+    var actionColumnTemplate = string.Empty;
+    var baseEditActionUrl = CommonFunction.GetBaseUrlForActions("Edit", "Item");
+    actionColumnTemplate += "<a href=" + baseEditActionUrl + "#: EditItemUrl # >";
+    actionColumnTemplate += "<span class='icon-grid icon-edit'></span></a>";
+
+    var statusColumnTemplate = string.Empty;
+    statusColumnTemplate += "<a class='seleclink' onclick='ItemGridManager.onChangeItemStatus(this, #=ItemId#)'>";
+    statusColumnTemplate += "#=Status# </a> ";
+
+}
+
+<div class="page-heading">
+    @ViewBag.Title
+    <hr />
+</div>
+<div class="search-panel">
+    <div class="col-md-12 p0">
+        <div class="search-panel-input-bar">
+            <div class="col-md-3 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-6 p0">Name</label>
+                    <input type="text" id="txtName" placeholder="Search By Name" class="form-control" data-field="Name" />
+                </div>
+            </div>
+            <div class="col-md-3 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-6 p0">Distributor</label>
+                    <input type="text" id="txtDistributor" placeholder="Search By Distributor" class="form-control" data-field="Distributor" />
+                </div>
+            </div>
+            <div class="col-md-3 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-6 p0">Manufacturer</label>
+                    <input type="text" id="txtManufacturer" placeholder="Search By Manufacturer" class="form-control" data-field="Manufacturer" />
+                </div>
+            </div>
+
+            <div class="col-md-3 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-6 p0">Location</label>
+                    <input type="text" id="txtLocation" placeholder="Search By Location" class="form-control" data-field="Location" />
+                </div>
+            </div>
+
+            <div class="col-md-3 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-6 p0">Category</label>
+                    @(Html.Kendo().DropDownList()
+         .Filter(FilterType.Contains)
+                          .Name("Category")
+                          .DataTextField("Text")
+                          .DataValueField("Value")
+                              .OptionLabel("Select Category...")
+                          .DataSource(source =>
+                          {
+                              source.Read(read =>
+                              {
+                                  read.Action("GetCategoryList", "Common");
+                              });
+                          })
+                          .Events(e =>
+                          {
+                              //e.Select("itemGridManager.ProgramList_onSelect");
+                              //e.DataBound("itemGridManager.ProgramList_onSelect");
+                              //e.Change("itemGridManager.ProgramList_onChange");
+                          })
+                    )
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-12 p0">
+        <div class="search-panel-button-bar floatr m0">
+            <input type="button" value="SEARCH" id="btnSearch" class="btn btn-kips btn-purple mt0" />
+            <input type="button" value="RESET" id="btnReset" class="btn btn-kips mtr0" />
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+<div class="grid-top-button-bar">
+
+    @Html.ActionLink("Add Item", "Add", "Item", null, new { @class = "btn btn-kips btn-large" })
+
+</div>
+
+<br />
+
+<div>
+    @(Html.Kendo().Grid(Model)
+          .Name("ItemGrid")
+          .Columns(columns =>
+          {
+              columns.Bound(s => s.ItemId).Title("ItemId").Hidden();
+
+              columns.Bound(s => s.Name).Title("Name").HeaderHtmlAttributes(new { title = "Name" });
+              columns.Bound(s => s.Formula).Title("Formula").HeaderHtmlAttributes(new { title = "Formula" });
+              columns.Bound(s => s.PiecesInPaking).Title("Pieces/Paking").HeaderHtmlAttributes(new { title = "Pieces / Paking" });
+              columns.Bound(s => s.UnitPrice).Title("UnitPrice").HeaderHtmlAttributes(new { title = "UnitPrice" });
+              columns.Bound(s => s.ManufacturerName).Title("Manufacturer").HeaderHtmlAttributes(new { title = "Manufacturer" });
+              columns.Bound(s => s.DistributorName).Title("Distributor").HeaderHtmlAttributes(new { title = "Distributor" });
+              columns.Bound(s => s.CategoryName).Title("Category").HeaderHtmlAttributes(new { title = "Category" });
+              columns.Bound(s => s.LocationName).Title("Location").HeaderHtmlAttributes(new { title = "Location" });
+
+              columns.Bound(s => s.TotalStock).Title("Stock").HeaderHtmlAttributes(new { title = "Stock" }).Sortable(false);
+
+              columns.Bound(s => s.ItemId).Title("").Filterable(f => f.Enabled(false)).ClientTemplate(actionColumnTemplate).Width(100).Title("Action").Sortable(false);
+
+          })
+          //.Pageable(pageable => pageable.ButtonCount(10).PageSizes(new List<string>() { "5", "10", "20", "30", "40", "50" }))
+          .Pageable(pageable => pageable.ButtonCount(10).PageSizes(new int[] { 20, 30, 40, 50, 100, 200 }))
+          .Selectable(selectable => selectable.Mode(GridSelectionMode.Single))
+          .Sortable()
+          .DataSource(dataSource => dataSource
+              .Ajax()
+              .PageSize(50)
+              .Model(model => model.Id(s => s.ItemId))
+              .Read(read => read.Action("GetItems", "Item"))
+              .Events(e =>
+              {
+                  e.Error("BMS.SiteScript.KendoEventHandler.onGridError");
+              })
+          ).Events(e => e.DataBound("BMS.SiteScript.KendoEventHandler.onGridDataBound"))
+
+    )
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/ItemGridManager")
+}
