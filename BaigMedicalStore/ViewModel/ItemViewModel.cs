@@ -59,4 +59,5 @@ namespace BaigMedicalStore.Models
         public bool IsActive { get; set; }
         public string EditItemUrl { get; internal set; }
     }
+     
 }

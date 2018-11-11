@@ -18,8 +18,7 @@ namespace BaigMedicalStore.Common
 
         public struct Constant
         {
-            public const string EncryptionDecryptionKey = "89343EA2-368C-4ABB-90DE-039BE336D2DD";
-            
+            public const string EncryptionDecryptionKey = "89343EA2-368C-4ABB-90DE-039BE336D2DD"; 
         }
 
     }

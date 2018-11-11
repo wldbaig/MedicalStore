@@ -16,6 +16,10 @@
     statusColumnTemplate += "<a class='seleclink' onclick='ItemGridManager.onChangeItemStatus(this, #=ItemId#)'>";
     statusColumnTemplate += "#=Status# </a> ";
 
+    var orderColumnTemplate = string.Empty;
+    orderColumnTemplate += "<button onclick='itemGridManager.OpenPopupWindow(#=ItemId#)'>";
+    orderColumnTemplate += "Add to Order </button> ";
+
 }
 
 <div class="page-heading">
@@ -114,8 +118,9 @@
               columns.Bound(s => s.LocationName).Title("Location").HeaderHtmlAttributes(new { title = "Location" });
 
               columns.Bound(s => s.TotalStock).Title("Stock").HeaderHtmlAttributes(new { title = "Stock" }).Sortable(false);
-
+              columns.Bound(s => s.ItemId).Title("").Filterable(f => f.Enabled(false)).ClientTemplate(orderColumnTemplate).Width(100).Title("Action").Sortable(false);
               columns.Bound(s => s.ItemId).Title("").Filterable(f => f.Enabled(false)).ClientTemplate(actionColumnTemplate).Width(100).Title("Action").Sortable(false);
+
 
           })
           //.Pageable(pageable => pageable.ButtonCount(10).PageSizes(new List<string>() { "5", "10", "20", "30", "40", "50" }))
@@ -135,6 +140,7 @@
 
     )
 </div>
+<div id="programSubjectSaveWindow"></div>
 
 @section scripts
 {

@@ -18,6 +18,7 @@ namespace BaigMedicalStore.Models
         public Item()
         {
             this.InvoiceDetails = new HashSet<InvoiceDetail>();
+            this.OrderDetails = new HashSet<OrderDetail>();
         }
     
         public int ItemId { get; set; }
@@ -43,5 +44,8 @@ namespace BaigMedicalStore.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual Manufacturer Manufacturer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

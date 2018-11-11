@@ -1,0 +1,99 @@
+﻿@using Kendo.Mvc.UI
+@model BaigMedicalStore.Models.OrderDetailViewModel
+
+@{
+    ViewBag.Title = "Process Order";
+}
+
+<div class="page-heading">
+    @ViewBag.Title
+    <hr />
+</div>
+
+@using (Html.BeginForm("Process", "Order", FormMethod.Post, null))
+{
+    <div class="search-panel">
+        <div class="col-md-12 p0">
+            <div class="search-panel-input-bar">
+
+                <div class="col-md-6 pl0">
+                    <div class="search-panel-input">
+                        <label class="col-md-6 p0">Distributor : @Model.Distributor</label>
+
+                    </div>
+                </div>
+                <div class="col-md-2 pl0">
+                    <div class="search-panel-input">
+                        <label class="col-md-12 p0">Total Items : @Model.TotalItems</label>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 pl0">
+                    <div class="search-panel-input">
+                        <label class="col-md-12 p0">Date : @Model.Date</label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 p0">
+            <div class="search-panel-button-bar floatr m0">
+
+                @Html.HiddenFor(m => Model.OrderId)
+                @*<input id="btnSubmitForm" type="submit" value="Save" class="cntr-hidden" />
+                <input id="btnSave" type="button" value="Save" class="btn btn-kips btn-purple" />*@
+                @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-kips btn-reset" })
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Category</th>
+                <th scope="col">Added On</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Dispatch</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.OrderDetailList.Count; i++)
+            {
+                <tr>
+                    @Html.HiddenFor(m => Model.OrderDetailList[i].OrderDetailId)
+                    <td>@Model.OrderDetailList[i].Item</td>
+                    <td>@Model.OrderDetailList[i].Category</td>
+                    <td>@Model.OrderDetailList[i].AddedOn</td>
+                    <td>
+                        @Model.OrderDetailList[i].Quantity
+                        @*@(Html.Kendo().NumericTextBoxFor(modelItem => Model.OrderDetailList[i].Quantity)
+                                                                            .Format("n0")
+                                                                            .Decimals(0)
+                                                                            .Min(0)
+
+                                                                            .HtmlAttributes(new
+                                                                            {
+                                                                                data_element_row = Model.OrderDetailList[i].OrderDetailId
+                                                                            })
+                        )*@
+                    </td>
+                    <td><button type="button"  class="btn-kips btn-purple" id="btn_@Model.OrderDetailList[i].OrderDetailId" onclick="orderProcessManager.UpdateStatus(this, @Model.OrderDetailList[i].OrderDetailId)">Dispatch</button></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/OrderProcessManager")
+}

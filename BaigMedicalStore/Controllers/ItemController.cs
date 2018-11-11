@@ -158,8 +158,7 @@ namespace BaigMedicalStore.Controllers
                 MessageModel = model
             };
 
-            return Json(response, JsonRequestBehavior.AllowGet);
-
+            return Json(response, JsonRequestBehavior.AllowGet); 
         }
 
         [HttpPost]

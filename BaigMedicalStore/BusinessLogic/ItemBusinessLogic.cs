@@ -48,8 +48,7 @@ namespace BaigMedicalStore.BusinessLogic
             var locat = fltr.ContainsKey("Location") ? fltr["Location"].ToString() : null;
 
             var categ = fltr.ContainsKey("Category") ? Convert.ToInt32(fltr["Category"]) : 0;
-
-
+             
             var queryResult = db.Item_Get(name, distribut, manufact, locat, categ, request.Page, request.PageSize, sortBy, objparam).ToList()
                 .Select(i => new ItemViewModel()
                 {

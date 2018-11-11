@@ -66,74 +66,7 @@ namespace BaigMedicalStore.Common
             Dashboard = 31,
         }
 
-        public enum KnowAboutKips
-        {
-            [Display(Name = "Newspaper")]
-            Newspaper,
-            [Display(Name = "TV")]
-            TV,
-            [Display(Name = "Kips Website")]
-            KipsWebsite,
-            [Display(Name = "Facebook")]
-            Facebook
-        }
-
-        public enum LevelOfExam
-        {
-            [Display(Name = "9th")]
-            Class9,
-            [Display(Name = "10th")]
-            Class10,
-            [Display(Name = "1st Year")]
-            InterPartOne,
-            [Display(Name = "2nd Year")]
-            InterPartTwo,
-            [Display(Name = "O Levels")]
-            ASLevel,
-            [Display(Name = "AS Levels")]
-            ALevel,
-            [Display(Name = "A Levels")]
-            OLevel,
-            [Display(Name = "DAE")]
-            DAE
-
-        }
-
-
-        public enum EmployementType
-        {
-            [Display(Name = "Private")]
-            Private,
-            [Display(Name = "Government")]
-            Government
-        }
-
-
-        public enum GeneralSubjects
-        {
-            MATH = 4,
-            BIOLOGY = 5,
-            CHEMISTRY = 6,
-            PHYSICS = 7,
-            COMPUTER = 8,
-            ENGLISH = 9,
-            INTELLIGENCE = 10,
-            GENERALMATH = 11
-        }
-
-        public enum TestCategory
-        {
-            ECAT = 1,
-            MDCAT = 2,
-            LMDCAT_UHS = 3,
-            NUMS = 4,
-            LMDCAT_NUMS = 5,
-            NUST = 6,
-            FUNG = 7,
-            AKNUMDCAT = 8,
-            ENGINEERING_MOCK = 9
-        }
-
+        
         public enum EntityStatus
         {
             InActive = 0,
@@ -141,98 +74,19 @@ namespace BaigMedicalStore.Common
             Delete
         }
 
-
-        public enum TestType
+        public enum ItemStatusInOrder
         {
-            CAT = 1,
-            CBT,
-            PBT
+            New = 1,
+            Repeat 
+        } 
+        public enum ItemOrderStatus
+        {
+            New = 1,
+            Repeat,
+            MoveFromOtherOrder
         }
 
-        public enum ProgramType
-        {
-            All = 1,
-            Active = 2,
-            Archive = 3
-        }
-
-        public enum AnswerType
-        {
-            Single = 1,
-            Multiple = 2,
-        }
-
-        public enum TestQuestionType
-        {
-            [Display(Name = "Simple")]
-            Simple = 1,
-            [Display(Name = "Numerical")]
-            Numerical = 2,
-            [Display(Name = "Diagrammatical")]
-            Diagrammatical = 3,
-            [Display(Name = "Numerical + Diagrammatical")]
-            NumericalDiagrammatical = 4
-        }
-
-        public enum QuestionFor
-        {
-            All = 1,
-            Student,
-            Admin
-        }
-
-        public enum LevelOfDifficulty
-        {
-            Easy = 1,
-            Medium,
-            Hard
-        }
-
-        public enum QuestionType
-        {
-            Used = 1,
-            UnUsed,
-            Both
-        }
-
-        public enum QuestionConfiguration
-        {
-            General = 1,
-            EMH
-        }
-
-        public enum QuestionSet
-        {
-            Same = 1,
-            Different
-        }
-
-        public enum PaymentPlan
-        {
-            [Display(Name = "Full Feature")]
-            FullFeature = 1,
-            [Display(Name = "Custom Feature")]
-            CustomFeature = 2
-        }
-        public enum ContentTypes
-        {
-            Video = 1,
-            Reading = 2
-        }
-
-        public enum CandidateTestStatus
-        {
-            Attempted = 0,
-            UnAttempted
-        }
-
-        public enum NotificationTypes
-        {
-            INBOX = 0,
-            TRASH,
-            DELETE
-        }
-
+  
         #region APPLICATION MESSAGES
 
 

@@ -19,6 +19,7 @@ namespace BaigMedicalStore.Models
         {
             this.DistributorManufacturers = new HashSet<DistributorManufacturer>();
             this.Items = new HashSet<Item>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int DistributorId { get; set; }
@@ -37,5 +38,7 @@ namespace BaigMedicalStore.Models
         public virtual ICollection<DistributorManufacturer> DistributorManufacturers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

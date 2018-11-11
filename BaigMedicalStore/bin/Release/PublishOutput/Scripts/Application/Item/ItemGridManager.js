@@ -10,7 +10,8 @@ function ItemGridManager() {
     var that = this;
 
     var globalVar = {
-
+        popupWindow: null,
+        itemId: 0
     };
 
     var domElement = {}
@@ -32,14 +33,45 @@ function ItemGridManager() {
             btnSearch: $('#btnSearch'),
             btnReset: $('#btnReset'),
             SearchPanelInput: $('.search-panel-input input[type=text]'),
-
+            kendoWindowElement: $("#programSubjectSaveWindow"),
             SetSearchCriteria: $('.search-panel-input')
         }
     }
 
 
     function Initialization() {
+        debugger;
+        CreatePopupWindow();
         LoadGridState();
+    }
+
+    function CreatePopupWindow() {
+
+        domElement.kendoWindowElement.kendoWindow({
+            width: "500px",
+            height: "600px",
+            visible: false,
+            iframe: false,
+            modal: true,
+            resizable: false,
+            draggable: true,
+            title: "Save item to order",
+            refresh: onPopupWindow_Refresh,
+            error: function (e) {
+                if (e.xhr.statusText == BMS.AppConstants.HttpStatusCode.Forbidden) {
+                    BMS.SiteScript.MessageBox.ShowError(BMS.AppConstants.HttpStatusCodeMessage.Forbidden);
+                    domElement.kendoWindowElement.data('kendoWindow').close();
+                }
+            }
+        });
+
+        globalVar.popupWindow = domElement.kendoWindowElement.data('kendoWindow');
+    }
+
+    function onPopupWindow_Refresh() {
+        InitializeVariables();
+        BMS.UtilityFunctions.RebindUnobtrusiveValidation();
+        BMS.UtilityFunctions.IgnoreDefaultValidationRule(domElement.formProgramSubject);
     }
 
     function BindEvents() {
@@ -192,4 +224,88 @@ function ItemGridManager() {
             }
         }
     }
+
+    //this.addItemToOrder = function (source, id) {
+    //    debugger;
+    //    BMS.SiteScript.CustomConfirmationBox("Are you sure, you want to add this to order?", onAddItemToOrderOkCallback, null, { source: source, id: id });
+    //    //"Are you sure, you want to change program status?"
+    //};
+
+    this.ClosePopupWindow = function (source) {
+        debugger;
+        globalVar.popupWindow.close();
+    }
+
+    this.OpenPopupWindow = function (itemId) {
+        debugger;
+
+        globalVar.itemId = itemId; 
+        globalVar.popupWindow.refresh({
+            url: BMS.AppConstants.URL.Action.Order.AddToOrderPartial,
+            data: { itemId: itemId  }
+        });
+
+        globalVar.popupWindow.center().open();
+    }
+
+    this.SaveOrder = function (source) {
+        debugger;
+
+        var form = $(source).closest('form');
+
+        var formActionURL = BMS.AppConstants.URL.Action.Order.AddItemToOrder;
+
+        //check model is valid
+        if (!$(form).valid()) {
+            return false;
+        }
+
+        //serializing form data
+        var formData = $(form).serialize();
+        ServiceManager.Post(formActionURL, formData, true, AddItemToOrderCallBack, globalVar.itemId, ServiceManager.DataType.Form, true);
+
+        return false;
+    }
+
+    function AddItemToOrderCallBack(response, param) {
+        debugger;
+        if (response && response.length > 0 && response[0]) {
+            var messageModel = response[1].MessageModel;
+
+            if (messageModel.Type == BMS.AppConstants.MessageType.Success) {
+               
+                that.ClosePopupWindow();
+            }
+
+            BMS.SiteScript.MessageBox.ShowSuccess(messageModel.Message);
+        }
+    }
+
+    //function onAddItemToOrderOkCallback(objInfo) {
+    //    debugger;
+    //    if (objInfo != null) {
+    //        var actionUrl = BMS.AppConstants.URL.Action.Order.AddItemToOrder + "?id=" + objInfo.id;
+    //        ServiceManager.Put(actionUrl, null, true, AddItemToOrderCallBack, objInfo.source);
+    //    }
+    //}
+
+
+    //function AddItemToOrderCallBack(response, anchorTagElement) {
+    //    debugger;
+    //    if (response && response.length > 0) {
+
+    //        var responseModel = response[1];
+
+    //        if (response[0] == true && responseModel.MessageModel.Type == BMS.AppConstants.MessageType.Success) {
+
+    //            $(anchorTagElement).text(responseModel.Status);
+    //            BMS.SiteScript.MessageBox.ShowSuccess(responseModel.MessageModel.Message);
+    //        }
+    //        else {
+    //            if (response[2] == BMS.AppConstants.HttpStatusCode.Forbidden) {
+    //                BMS.SiteScript.MessageBox.ShowError(BMS.AppConstants.HttpStatusCodeMessage.Forbidden);
+    //            }
+    //        }
+    //    }
+    //}
 }

@@ -1,0 +1,111 @@
+﻿
+@using Kendo.Mvc.UI
+@using BaigMedicalStore.Common
+
+@model IEnumerable<BaigMedicalStore.Models.OrderViewModel>
+
+@{
+    ViewBag.Title = "Orders";
+
+    var actionColumnTemplate = string.Empty;
+    var baseProcessActionUrl = CommonFunction.GetBaseUrlForActions("Process", "Order");
+    actionColumnTemplate += " <a href=" + baseProcessActionUrl + "#:ProcessOrder# >Process Order</a>  ";
+
+
+    var actionColumnTemplate2 = string.Empty;
+    var baseViewActionUrl = CommonFunction.GetBaseUrlForActions("Detail", "Order");
+    actionColumnTemplate2 += "<a href=" + baseViewActionUrl + "#:ViewOrder# >View Order Detail</a>";
+
+    var statusColumnTemplate = string.Empty;
+    statusColumnTemplate += "<a class='seleclink' onclick='ItemGridManager.onChangeItemStatus(this, #=ItemId#)'>";
+    statusColumnTemplate += "#=Status# </a> ";
+
+}
+
+<div class="page-heading">
+    @ViewBag.Title
+    <hr />
+</div>
+<div class="search-panel">
+    <div class="col-md-12 p0">
+        <div class="search-panel-input-bar">
+            <div class="col-md-3 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-6 p0">Date</label>
+                    @(Html.Kendo().DatePicker().Name("Date").Max(DateTime.Now)
+                    )
+                </div>
+            </div>
+            <div class="col-md-3 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-6 p0">Distributor</label>
+                    @(Html.Kendo().DropDownList()
+                                                   .Name("Distributor")
+                                                   .OptionLabel("Please Select")
+                                                   .DataTextField("Text")
+                                                   .DataValueField("Value")
+                                                   .DataSource(d => d.Read(r => r.Action("GetDistributorList", "Common")))
+                    )
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-12 p0">
+        <div class="search-panel-button-bar floatr m0">
+            <input type="button" value="SEARCH" id="btnSearch" class="btn btn-kips btn-purple mt0" />
+            <input type="button" value="RESET" id="btnReset" class="btn btn-kips mtr0" />
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+@*<div class="grid-top-button-bar">
+
+        @Html.ActionLink("Add Item", "Add", "Item", null, new { @class = "btn btn-kips btn-large" })
+
+    </div>*@
+
+<br />
+
+<div>
+    @(Html.Kendo().Grid(Model)
+                          .Name("OrderGrid")
+                          .Columns(columns =>
+                          {
+                              columns.Bound(s => s.OrderId).Title("OrderId").Hidden();
+
+                              columns.Bound(s => s.Date).Title("Date");
+                              columns.Bound(s => s.Distributor).Title("Distributor").HeaderHtmlAttributes(new { title = "Distributor" });
+                              columns.Bound(s => s.IsDispatched).Title("Status").HeaderHtmlAttributes(new { title = "Status" });
+                              columns.Bound(s => s.TotalItems).Title("Total Items").HeaderHtmlAttributes(new { title = "Total Items" });
+                              columns.Bound(s => s.TotalItemsPending).Title("Total Items Pending").HeaderHtmlAttributes(new { title = "Total Items Pending" });
+
+                              columns.Bound(s => s.OrderId).Title("").Filterable(f => f.Enabled(false)).ClientTemplate(actionColumnTemplate).Title("").Sortable(false);
+                              columns.Bound(s => s.OrderId).Title("").Filterable(f => f.Enabled(false)).ClientTemplate(actionColumnTemplate2).Title("").Sortable(false);
+
+
+                          })
+                          //.Pageable(pageable => pageable.ButtonCount(10).PageSizes(new List<string>() { "5", "10", "20", "30", "40", "50" }))
+                          .Pageable(pageable => pageable.ButtonCount(10).PageSizes(new int[] { 20, 30, 40, 50, 100, 200 }))
+                          .Selectable(selectable => selectable.Mode(GridSelectionMode.Single))
+
+                          .DataSource(dataSource => dataSource
+                              .Ajax()
+                              .PageSize(50)
+                              .Model(model => model.Id(s => s.OrderId))
+                              .Read(read => read.Action("GetOrders", "Order"))
+                              .Events(e =>
+                              {
+                                  e.Error("BMS.SiteScript.KendoEventHandler.onGridError");
+                              })
+                          ).Events(e => e.DataBound("BMS.SiteScript.KendoEventHandler.onGridDataBound"))
+
+    )
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/OrderGridManager")
+}

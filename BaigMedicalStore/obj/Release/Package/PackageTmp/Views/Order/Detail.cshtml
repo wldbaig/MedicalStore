@@ -1,0 +1,70 @@
+﻿@model BaigMedicalStore.Models.OrderDetailViewModel
+@{
+    ViewBag.Title = "Order Detail";
+}
+
+<div class="page-heading">
+    @ViewBag.Title
+    <hr />
+</div>
+
+
+<div class="search-panel">
+    <div class="col-md-12 p0">
+        <div class="search-panel-input-bar">
+
+            <div class="col-md-6 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-6 p0">Distributor : @Model.Distributor</label>
+
+                </div>
+            </div>
+            <div class="col-md-2 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-12 p0">Total Items : @Model.TotalItems</label>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 pl0">
+                <div class="search-panel-input">
+                    <label class="col-md-12 p0">Date : @Model.Date</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 p0">
+        <div class="search-panel-button-bar floatr m0">
+            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-kips btn-reset" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+
+            <th scope="col">Item</th>
+            <th scope="col">Category</th>
+            <th scope="col">Added On</th>
+            <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var od in Model.OrderDetailList)
+        {
+            <tr>
+                <td>@od.Item</td>
+                <td>@od.Category</td>
+                <td>@od.AddedOn</td>
+                <td>@od.Quantity</td>
+            </tr>
+        }
+         
+    </tbody>
+</table>
+

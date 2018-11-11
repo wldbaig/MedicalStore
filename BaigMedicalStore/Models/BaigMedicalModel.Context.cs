@@ -41,6 +41,8 @@ namespace BaigMedicalStore.Models
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
     
         public virtual ObjectResult<Distributor_Get_Result> Distributor_Get(string name, string company, string phone, Nullable<int> pageNumber, Nullable<int> pageSize, string orderBy, ObjectParameter totalRecords)
         {
@@ -160,6 +162,27 @@ namespace BaigMedicalStore.Models
                 new ObjectParameter("OrderBy", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Manufacturer_Get_Result>("Manufacturer_Get", nameParameter, aliasParameter, phoneParameter, pageNumberParameter, pageSizeParameter, orderByParameter, totalRecords);
+        }
+    
+        public virtual ObjectResult<Order_Get_Result> Order_Get(Nullable<System.DateTime> date, Nullable<int> distributorId, Nullable<int> pageNumber, Nullable<int> pageSize, ObjectParameter totalRecords)
+        {
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("Date", date) :
+                new ObjectParameter("Date", typeof(System.DateTime));
+    
+            var distributorIdParameter = distributorId.HasValue ?
+                new ObjectParameter("DistributorId", distributorId) :
+                new ObjectParameter("DistributorId", typeof(int));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Order_Get_Result>("Order_Get", dateParameter, distributorIdParameter, pageNumberParameter, pageSizeParameter, totalRecords);
         }
     }
 }

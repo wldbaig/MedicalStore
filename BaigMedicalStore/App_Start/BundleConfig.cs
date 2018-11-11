@@ -65,6 +65,11 @@ namespace BaigMedicalStore
 
             bundles.Add(new ScriptBundle("~/bundles/ItemGridManager").Include("~/Scripts/Application/Item/ItemGridManager.js"));
 
+
+            //Order Management Bundles
+            bundles.Add(new ScriptBundle("~/bundles/OrderGridManager").Include("~/Scripts/Application/Order/OrderGridManager.js"));
+            bundles.Add(new ScriptBundle("~/bundles/OrderProcessManager").Include("~/Scripts/Application/Order/OrderProcessManager.js"));
+
             bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
                         "~/Content/Kendo/css/kendo.dataviz.default.min.css",
                         "~/Content/Kendo/css/kendo.common.min.css",
