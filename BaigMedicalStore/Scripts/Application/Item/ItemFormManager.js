@@ -90,9 +90,7 @@ function ItemFormManager() {
         var dataItem = object.dataItem(e.item);
         var distribId = dataItem.Value;
         if (distribId != "") {
-            GetManufactByDistrib(distribId);
-
-           
+            GetManufactByDistrib(distribId); 
         }
     }
 

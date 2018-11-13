@@ -173,4 +173,3 @@ E:\Projects\BaigMedicalStore\BaigMedicalStore\bin\Microsoft.Owin.Security.Micros
 E:\Projects\BaigMedicalStore\BaigMedicalStore\obj\Debug\BaigMedicalStore.csproj.CoreCompileInputs.cache
 E:\Projects\BaigMedicalStore\BaigMedicalStore\obj\Debug\BaigMedicalStore.dll
 E:\Projects\BaigMedicalStore\BaigMedicalStore\obj\Debug\BaigMedicalStore.pdb
-E:\Projects\BaigMedicalStore\BaigMedicalStore\obj\Debug\BaigMedicalStore.csprojResolveAssemblyReference.cache

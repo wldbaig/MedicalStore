@@ -37,12 +37,12 @@ namespace BaigMedicalStore.Models
         public virtual DbSet<DistributorManufacturer> DistributorManufacturers { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     
         public virtual ObjectResult<Distributor_Get_Result> Distributor_Get(string name, string company, string phone, Nullable<int> pageNumber, Nullable<int> pageSize, string orderBy, ObjectParameter totalRecords)
         {

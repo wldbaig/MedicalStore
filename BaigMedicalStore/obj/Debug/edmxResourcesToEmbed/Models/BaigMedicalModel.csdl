@@ -38,6 +38,13 @@
       <Parameter Name="OrderBy" Mode="In" Type="String" />
       <Parameter Name="TotalRecords" Mode="InOut" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="Order_Get" ReturnType="Collection(BMSModel.Order_Get_Result)">
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+      <Parameter Name="DistributorId" Mode="In" Type="Int32" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="TotalRecords" Mode="InOut" Type="Int32" />
+    </FunctionImport>
     <EntitySet Name="C__MigrationHistory" EntityType="BMSModel.C__MigrationHistory" />
     <EntitySet Name="AspNetRoles" EntityType="BMSModel.AspNetRole" />
     <EntitySet Name="AspNetUserClaims" EntityType="BMSModel.AspNetUserClaim" />
@@ -48,8 +55,11 @@
     <EntitySet Name="DistributorManufacturers" EntityType="BMSModel.DistributorManufacturer" />
     <EntitySet Name="Invoices" EntityType="BMSModel.Invoice" />
     <EntitySet Name="InvoiceDetails" EntityType="BMSModel.InvoiceDetail" />
+    <EntitySet Name="Items" EntityType="BMSModel.Item" />
     <EntitySet Name="Locations" EntityType="BMSModel.Location" />
     <EntitySet Name="Manufacturers" EntityType="BMSModel.Manufacturer" />
+    <EntitySet Name="Orders" EntityType="BMSModel.Order" />
+    <EntitySet Name="OrderDetails" EntityType="BMSModel.OrderDetail" />
     <EntitySet Name="Users" EntityType="BMSModel.User" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="BMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -63,9 +73,21 @@
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
+    <AssociationSet Name="FK_Item_Category" Association="BMSModel.FK_Item_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
     <AssociationSet Name="FK_DistributorManufacturers_Distributor" Association="BMSModel.FK_DistributorManufacturers_Distributor">
       <End Role="Distributor" EntitySet="Distributors" />
       <End Role="DistributorManufacturer" EntitySet="DistributorManufacturers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Item_Distributor" Association="BMSModel.FK_Item_Distributor">
+      <End Role="Distributor" EntitySet="Distributors" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderId_Distributor" Association="BMSModel.FK_OrderId_Distributor">
+      <End Role="Distributor" EntitySet="Distributors" />
+      <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_DistributorManufacturers_Manufacturer" Association="BMSModel.FK_DistributorManufacturers_Manufacturer">
       <End Role="Manufacturer" EntitySet="Manufacturers" />
@@ -75,15 +97,6 @@
       <End Role="Invoice" EntitySet="Invoices" />
       <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
     </AssociationSet>
-    <AssociationSet Name="AspNetUserRoles" Association="BMSModel.AspNetUserRoles">
-      <End Role="AspNetRole" EntitySet="AspNetRoles" />
-      <End Role="AspNetUser" EntitySet="AspNetUsers" />
-    </AssociationSet>
-    <EntitySet Name="Items" EntityType="BMSModel.Item" />
-    <AssociationSet Name="FK_Item_Distributor" Association="BMSModel.FK_Item_Distributor">
-      <End Role="Distributor" EntitySet="Distributors" />
-      <End Role="Item" EntitySet="Items" />
-    </AssociationSet>
     <AssociationSet Name="FK_InvoiceDetail_Item" Association="BMSModel.FK_InvoiceDetail_Item">
       <End Role="Item" EntitySet="Items" />
       <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
@@ -91,12 +104,6 @@
     <AssociationSet Name="FK_Item_Manufacturer" Association="BMSModel.FK_Item_Manufacturer">
       <End Role="Manufacturer" EntitySet="Manufacturers" />
       <End Role="Item" EntitySet="Items" />
-    </AssociationSet>
-    <EntitySet Name="Orders" EntityType="BMSModel.Order" />
-    <EntitySet Name="OrderDetails" EntityType="BMSModel.OrderDetail" />
-    <AssociationSet Name="FK_OrderId_Distributor" Association="BMSModel.FK_OrderId_Distributor">
-      <End Role="Distributor" EntitySet="Distributors" />
-      <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_OrderDetail_Item" Association="BMSModel.FK_OrderDetail_Item">
       <End Role="Item" EntitySet="Items" />
@@ -106,16 +113,9 @@
       <End Role="Order" EntitySet="Orders" />
       <End Role="OrderDetail" EntitySet="OrderDetails" />
     </AssociationSet>
-    <FunctionImport Name="Order_Get" ReturnType="Collection(BMSModel.Order_Get_Result)">
-      <Parameter Name="Date" Mode="In" Type="DateTime" />
-      <Parameter Name="DistributorId" Mode="In" Type="Int32" />
-      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
-      <Parameter Name="PageSize" Mode="In" Type="Int32" />
-      <Parameter Name="TotalRecords" Mode="InOut" Type="Int32" />
-    </FunctionImport>
-    <AssociationSet Name="FK_Item_Category" Association="BMSModel.FK_Item_Category">
-      <End Role="Category" EntitySet="Categories" />
-      <End Role="Item" EntitySet="Items" />
+    <AssociationSet Name="AspNetUserRoles" Association="BMSModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
   </EntityContainer>
   <ComplexType Name="Distributor_Get_Result">
@@ -182,6 +182,14 @@
     <Property Type="DateTime" Name="UpdatedOn" Nullable="true" Precision="23" />
     <Property Type="Boolean" Name="IsActive" Nullable="false" />
     <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="Order_Get_Result">
+    <Property Type="Int64" Name="OrderId" Nullable="false" />
+    <Property Type="DateTime" Name="ModifiedDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Distributor" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="IsDispatched" Nullable="false" MaxLength="7" />
+    <Property Type="Int32" Name="TotalItems" Nullable="true" />
+    <Property Type="Int32" Name="TotalItemsPending" Nullable="true" />
   </ComplexType>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -310,6 +318,34 @@
     <NavigationProperty Name="Invoice" Relationship="BMSModel.FK_InvoiceDetail_Invoice" FromRole="InvoiceDetail" ToRole="Invoice" />
     <NavigationProperty Name="Item" Relationship="BMSModel.FK_InvoiceDetail_Item" FromRole="InvoiceDetail" ToRole="Item" />
   </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LocationId" Type="Int32" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PiecesInPacking" Type="Int32" />
+    <Property Name="Formula" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DistributorId" Type="Int32" />
+    <Property Name="ManufacturerId" Type="Int32" />
+    <Property Name="TotalStock" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Category" Relationship="BMSModel.FK_Item_Category" FromRole="Item" ToRole="Category" />
+    <NavigationProperty Name="Distributor" Relationship="BMSModel.FK_Item_Distributor" FromRole="Item" ToRole="Distributor" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="BMSModel.FK_InvoiceDetail_Item" FromRole="Item" ToRole="InvoiceDetail" />
+    <NavigationProperty Name="Manufacturer" Relationship="BMSModel.FK_Item_Manufacturer" FromRole="Item" ToRole="Manufacturer" />
+    <NavigationProperty Name="OrderDetails" Relationship="BMSModel.FK_OrderDetail_Item" FromRole="Item" ToRole="OrderDetail" />
+  </EntityType>
   <EntityType Name="Location">
     <Key>
       <PropertyRef Name="LocationId" />
@@ -337,6 +373,32 @@
     <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="DistributorManufacturers" Relationship="BMSModel.FK_DistributorManufacturers_Manufacturer" FromRole="Manufacturer" ToRole="DistributorManufacturer" />
     <NavigationProperty Name="Items" Relationship="BMSModel.FK_Item_Manufacturer" FromRole="Manufacturer" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DistributorId" Type="Int32" Nullable="false" />
+    <Property Name="IsDispatched" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Distributor" Relationship="BMSModel.FK_OrderId_Distributor" FromRole="Order" ToRole="Distributor" />
+    <NavigationProperty Name="OrderDetails" Relationship="BMSModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="OrderDetailId" />
+    </Key>
+    <Property Name="OrderDetailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int64" Nullable="false" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="IsDispatched" Type="Boolean" Nullable="false" />
+    <Property Name="AddedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Item" Relationship="BMSModel.FK_OrderDetail_Item" FromRole="OrderDetail" ToRole="Item" />
+    <NavigationProperty Name="Order" Relationship="BMSModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -388,6 +450,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Item_Category">
+    <End Type="BMSModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="BMSModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DistributorManufacturers_Distributor">
     <End Type="BMSModel.Distributor" Role="Distributor" Multiplicity="1" />
     <End Type="BMSModel.DistributorManufacturer" Role="DistributorManufacturer" Multiplicity="*" />
@@ -396,6 +470,30 @@
         <PropertyRef Name="DistributorId" />
       </Principal>
       <Dependent Role="DistributorManufacturer">
+        <PropertyRef Name="DistributorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Item_Distributor">
+    <End Type="BMSModel.Distributor" Role="Distributor" Multiplicity="0..1" />
+    <End Type="BMSModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Distributor">
+        <PropertyRef Name="DistributorId" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="DistributorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderId_Distributor">
+    <End Type="BMSModel.Distributor" Role="Distributor" Multiplicity="1" />
+    <End Type="BMSModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Distributor">
+        <PropertyRef Name="DistributorId" />
+      </Principal>
+      <Dependent Role="Order">
         <PropertyRef Name="DistributorId" />
       </Dependent>
     </ReferentialConstraint>
@@ -424,50 +522,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="AspNetUserRoles">
-    <End Type="BMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-    <End Type="BMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-  </Association>
-  <EntityType Name="Item">
-    <Key>
-      <PropertyRef Name="ItemId" />
-    </Key>
-    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="LocationId" Type="Int32" />
-    <Property Name="CategoryId" Type="Int32" Nullable="false" />
-    <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="PiecesInPacking" Type="Int32" />
-    <Property Name="Formula" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="DistributorId" Type="Int32" />
-    <Property Name="ManufacturerId" Type="Int32" />
-    <Property Name="TotalStock" Type="Int32" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="UpdatedBy" Type="Int32" />
-    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
-    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Distributor" Relationship="BMSModel.FK_Item_Distributor" FromRole="Item" ToRole="Distributor" />
-    <NavigationProperty Name="InvoiceDetails" Relationship="BMSModel.FK_InvoiceDetail_Item" FromRole="Item" ToRole="InvoiceDetail" />
-    <NavigationProperty Name="Manufacturer" Relationship="BMSModel.FK_Item_Manufacturer" FromRole="Item" ToRole="Manufacturer" />
-    <NavigationProperty Name="OrderDetails" Relationship="BMSModel.FK_OrderDetail_Item" FromRole="Item" ToRole="OrderDetail" />
-    <NavigationProperty Name="Category" Relationship="BMSModel.FK_Item_Category" FromRole="Item" ToRole="Category" />
-  </EntityType>
-  <Association Name="FK_Item_Distributor">
-    <End Type="BMSModel.Distributor" Role="Distributor" Multiplicity="0..1" />
-    <End Type="BMSModel.Item" Role="Item" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Distributor">
-        <PropertyRef Name="DistributorId" />
-      </Principal>
-      <Dependent Role="Item">
-        <PropertyRef Name="DistributorId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_InvoiceDetail_Item">
     <End Type="BMSModel.Item" Role="Item" Multiplicity="1" />
     <End Type="BMSModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
@@ -489,44 +543,6 @@
       </Principal>
       <Dependent Role="Item">
         <PropertyRef Name="ManufacturerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Order">
-    <Key>
-      <PropertyRef Name="OrderId" />
-    </Key>
-    <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DistributorId" Type="Int32" Nullable="false" />
-    <Property Name="IsDispatched" Type="Boolean" Nullable="false" />
-    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Distributor" Relationship="BMSModel.FK_OrderId_Distributor" FromRole="Order" ToRole="Distributor" />
-    <NavigationProperty Name="OrderDetails" Relationship="BMSModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
-    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
-  <EntityType Name="OrderDetail">
-    <Key>
-      <PropertyRef Name="OrderDetailId" />
-    </Key>
-    <Property Name="OrderDetailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OrderId" Type="Int64" Nullable="false" />
-    <Property Name="ItemId" Type="Int32" Nullable="false" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Item" Relationship="BMSModel.FK_OrderDetail_Item" FromRole="OrderDetail" ToRole="Item" />
-    <NavigationProperty Name="Order" Relationship="BMSModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
-    <Property Name="IsDispatched" Type="Boolean" Nullable="false" />
-    <Property Name="AddedOn" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
-  <Association Name="FK_OrderId_Distributor">
-    <End Type="BMSModel.Distributor" Role="Distributor" Multiplicity="1" />
-    <End Type="BMSModel.Order" Role="Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Distributor">
-        <PropertyRef Name="DistributorId" />
-      </Principal>
-      <Dependent Role="Order">
-        <PropertyRef Name="DistributorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -554,24 +570,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <ComplexType Name="Order_Get_Result">
-    <Property Type="Int64" Name="OrderId" Nullable="false" />
-    <Property Type="DateTime" Name="ModifiedDate" Nullable="false" Precision="23" />
-    <Property Type="String" Name="Distributor" Nullable="false" MaxLength="100" />
-    <Property Type="String" Name="IsDispatched" Nullable="false" MaxLength="7" />
-    <Property Type="Int32" Name="TotalItems" Nullable="true" />
-    <Property Type="Int32" Name="TotalItemsPending" Nullable="true" />
-  </ComplexType>
-  <Association Name="FK_Item_Category">
-    <End Type="BMSModel.Category" Role="Category" Multiplicity="1" />
-    <End Type="BMSModel.Item" Role="Item" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Category">
-        <PropertyRef Name="CategoryId" />
-      </Principal>
-      <Dependent Role="Item">
-        <PropertyRef Name="CategoryId" />
-      </Dependent>
-    </ReferentialConstraint>
+  <Association Name="AspNetUserRoles">
+    <End Type="BMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="BMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
   </Association>
 </Schema>
