@@ -28,10 +28,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/21/2017 18:44:08</publishTime>
     </File>
     <File Include="bin/BaigMedicalStore.dll">
-      <publishTime>11/11/2018 18:28:32</publishTime>
+      <publishTime>11/13/2018 21:07:51</publishTime>
     </File>
     <File Include="bin/BaigMedicalStore.pdb">
-      <publishTime>11/11/2018 18:28:32</publishTime>
+      <publishTime>11/13/2018 21:07:51</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 13:15:18</publishTime>
@@ -898,7 +898,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/21/2017 18:43:48</publishTime>
     </File>
     <File Include="Models/BaigMedicalModel.edmx.diagram">
-      <publishTime>11/11/2018 14:10:34</publishTime>
+      <publishTime>11/13/2018 20:58:58</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>12/01/2017 15:09:43</publishTime>
@@ -2428,7 +2428,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/21/2017 18:44:08</publishTime>
     </File>
     <File Include="Scripts/Application/Common/AppConstants.js">
-      <publishTime>11/11/2018 16:53:42</publishTime>
+      <publishTime>11/13/2018 21:05:37</publishTime>
     </File>
     <File Include="Scripts/Application/Common/AppVar.js">
       <publishTime>12/10/2017 16:23:30</publishTime>
@@ -2452,7 +2452,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/30/2017 19:03:31</publishTime>
     </File>
     <File Include="Scripts/Application/Item/ItemFormManager.js">
-      <publishTime>12/31/2017 19:21:26</publishTime>
+      <publishTime>11/13/2018 20:49:36</publishTime>
     </File>
     <File Include="Scripts/Application/Item/ItemGridManager.js">
       <publishTime>11/11/2018 16:39:12</publishTime>

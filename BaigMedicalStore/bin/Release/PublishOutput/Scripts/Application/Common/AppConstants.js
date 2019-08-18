@@ -7,16 +7,16 @@ BMS.AppConstants = {
         Warning: "Warning",
         Success: "Success"
     },
-    
+
     URL: {
         Action: {
             AccessDenied: BMS.AppVar.AppHost + "/Error/AccessDenied",
-           Distributor: {
+            Distributor: {
                 ChangeDistributorStatus: BMS.AppVar.AppHost + "/Distributor/ChangeDistributorStatus",
             },
             Item: {
                 ChangeItemStatus: BMS.AppVar.AppHost + "/Item/ChangeItemStatus",
-            }, 
+            },
             Order: {
                 AddItemToOrder: BMS.AppVar.AppHost + "/Order/AddItemToOrder",
                 AddToOrderPartial: BMS.AppVar.AppHost + "/Order/AddToOrderPartial",
@@ -25,12 +25,15 @@ BMS.AppConstants = {
             Manufacturer: {
                 ChangeManufacturerStatus: BMS.AppVar.AppHost + "/Manufacturer/ChangeManufacturerStatus",
             },
-              
+
             Account: {
                 SetPassword: BMS.AppVar.AppHost + "/Account/SetPassword",
                 ChangeUserStatus: BMS.AppVar.AppHost + "/Account/ChangeUserStatus",
             },
-            
+            Common: {
+                GetDistributorManufacturerList: BMS.AppVar.AppHost + "/Common/GetDistributorManufacturerList"
+            },
+
         },
         API: {
             CandidateTestService: BMS.AppVar.AppHost + "/api/CandidateTestService"
